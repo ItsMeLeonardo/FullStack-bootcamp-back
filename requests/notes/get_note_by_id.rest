@@ -1,0 +1,5 @@
+GET http://localhost:3001/api/notes/619d3e7d4875760027285fdc
+
+###
+# with inconplete id
+GET http://localhost:3001/api/notes/619d3e7d4875760027285fd
