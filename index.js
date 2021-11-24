@@ -46,7 +46,7 @@ app.get('/', (request, response) => {
 
 app.get('/api/notes', (request, response) => {
   Note.find({}).then((notes) => {
-    response.json(notes)
+    response.status(200).json(notes)
   })
 })
 
@@ -97,7 +97,7 @@ app.post('/api/notes', (request, response) => {
 app.put('/api/notes/:id', (request, response, next) => {
   const { id } = request.params
   const note = request.body
-  if (!note) {
+  if (!note?.content) {
     response.status(400).json({
       error: 'content missing',
     })
@@ -126,6 +126,8 @@ app.use(Sentry.Handlers.errorHandler())
 app.use(handleErrors)
 
 const PORT = process.env.PORT || 3001
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`)
 })
+
+module.exports = { app, server }
