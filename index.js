@@ -44,13 +44,11 @@ app.get('/', (request, response) => {
   response.send('<h1>Full stack open - Bootcamp</h1>')
 })
 
-app.get('/api/notes', (request, response) => {
-  Note.find({}).then((notes) => {
-    response.status(200).json(notes)
-  })
+app.get('/api/notes', async (request, response) => {
+  const notes = await Note.find({})
+  response.status(200).json(notes)
 })
 
-// url with dynamic path => /:dynamicValue
 app.get('/api/notes/:id', (request, response, next) => {
   const { id } = request.params
 
@@ -73,13 +71,12 @@ app.delete('/api/notes/:id', (request, response, next) => {
     .catch((error) => next(error))
 })
 
-app.post('/api/notes', (request, response) => {
+app.post('/api/notes', async (request, response, next) => {
   const note = request.body
   if (!note?.content) {
     response.status(400).json({
       error: 'content missing',
     })
-
     return
   }
 
@@ -89,9 +86,12 @@ app.post('/api/notes', (request, response) => {
     date: new Date(),
   })
 
-  newNote.save().then((savedNote) => {
+  try {
+    const savedNote = await newNote.save()
     response.status(201).json(savedNote)
-  })
+  } catch (error) {
+    next(error)
+  }
 })
 
 app.put('/api/notes/:id', (request, response, next) => {
