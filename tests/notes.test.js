@@ -81,11 +81,12 @@ test('note with without small content', async () => {
 
 test('should delete the first note', async () => {
   const { response: firstResponse } = await getAllNotes()
-  const { id } = firstResponse.body[0]
+  const [noteToDelete] = firstResponse.body
+  const { id } = noteToDelete
   await api.delete(`/api/notes/${id}`).expect(204)
 
   const { response: newResponse, contents } = await getAllNotes()
-  expect(contents).not.toContain(initialNotes[0].content)
+  expect(contents).not.toContain(noteToDelete.content)
 
   expect(newResponse.body).toHaveLength(initialNotes.length - 1)
 })
@@ -106,7 +107,8 @@ test('should return a note with new info', async () => {
     content: 'This is a new content',
   }
   const { response: firstResponse } = await getAllNotes()
-  const { id } = firstResponse.body[0]
+  const [noteToUpdate] = firstResponse.body
+  const { id } = noteToUpdate
 
   await api
     .put(`/api/notes/${id}`)
@@ -139,7 +141,8 @@ test('Edit with invalid ID', async () => {
 
 test('Edit the second note without content', async () => {
   const { response: firstResponse } = await getAllNotes()
-  const { id } = firstResponse.body[1]
+  const [noteToUpdate] = firstResponse.body
+  const { id } = noteToUpdate
 
   await api
     .put(`/api/notes/${id}`)
