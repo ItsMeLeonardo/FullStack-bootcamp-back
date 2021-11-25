@@ -16,6 +16,9 @@ const Note = require('./models/Note')
 const notFound = require('./middleware/notFound')
 const handleErrors = require('./middleware/handleErrors')
 
+const usersRouter = require('./controllers/users')
+const notesRouter = require('./controllers/notes')
+
 Sentry.init({
   dsn: 'https://331ddb4d624541159f301c5e2ead419b@o1076483.ingest.sentry.io/6078345',
   integrations: [
@@ -44,79 +47,9 @@ app.get('/', (request, response) => {
   response.send('<h1>Full stack open - Bootcamp</h1>')
 })
 
-app.get('/api/notes', async (request, response) => {
-  const notes = await Note.find({})
-  response.status(200).json(notes)
-})
+app.use('/api/notes', notesRouter)
 
-app.get('/api/notes/:id', (request, response, next) => {
-  const { id } = request.params
-
-  Note.findById(id)
-    .then((note) => {
-      if (!note) {
-        return response.status(404).end()
-      }
-      return response.json(note)
-    })
-    .catch((error) => next(error))
-})
-
-app.delete('/api/notes/:id', (request, response, next) => {
-  const { id } = request.params
-  Note.findByIdAndRemove(id)
-    .then(() => {
-      response.status(204).end()
-    })
-    .catch((error) => next(error))
-})
-
-app.post('/api/notes', async (request, response, next) => {
-  const note = request.body
-  if (!note?.content) {
-    response.status(400).json({
-      error: 'content missing',
-    })
-    return
-  }
-
-  const newNote = new Note({
-    content: note.content,
-    important: note.important || false,
-    date: new Date(),
-  })
-
-  try {
-    const savedNote = await newNote.save()
-    response.status(201).json(savedNote)
-  } catch (error) {
-    next(error)
-  }
-})
-
-app.put('/api/notes/:id', (request, response, next) => {
-  const { id } = request.params
-  const note = request.body
-  if (!note?.content) {
-    response.status(400).json({
-      error: 'content missing',
-    })
-
-    return
-  }
-
-  const newNoteInfo = {
-    content: note.content,
-    important: note.important || false,
-  }
-
-  // with {new: true} we get the updated note
-  Note.findByIdAndUpdate(id, newNoteInfo, { new: true })
-    .then((note) => {
-      response.status(200).json(note)
-    })
-    .catch((error) => next(error))
-})
+app.use('/api/users', usersRouter)
 
 app.use(notFound)
 

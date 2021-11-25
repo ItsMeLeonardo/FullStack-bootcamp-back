@@ -1,18 +1,19 @@
-const supertest = require('supertest')
-const { app } = require('../../index')
+const api = require('../generic-helper')
 
-const api = supertest(app)
+const rootId = '619ed3fb66d61bb541baa701'
 
 const initialNotes = [
   {
     content: 'HTML is easy test',
     important: false,
     date: new Date(),
+    user: rootId,
   },
   {
     content: 'Mongo is difficult :c',
     important: true,
     date: new Date(),
+    user: rootId,
   },
 ]
 

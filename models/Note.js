@@ -8,6 +8,11 @@ const noteSchema = new Schema({
   },
   date: Date,
   important: Boolean,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: '{PATH} is required',
+  },
 })
 
 noteSchema.set('toJSON', {

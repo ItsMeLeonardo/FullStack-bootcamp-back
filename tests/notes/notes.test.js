@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-const { server } = require('../index')
-const Note = require('../models/Note')
-const { initialNotes, api, getAllNotes } = require('./helpers/notes-helpers')
+const { server } = require('../../index')
+const Note = require('../../models/Note')
+const { initialNotes, api, getAllNotes } = require('./notes-helpers')
 
 beforeEach(async () => {
   await Note.deleteMany({})
@@ -35,6 +35,7 @@ describe('POST method', () => {
     const newNote = {
       content: 'Test new note :D',
       important: false,
+      user: '619ed3fb66d61bb541baa701',
     }
 
     await api

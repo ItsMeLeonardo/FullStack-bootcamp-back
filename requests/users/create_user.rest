@@ -1,0 +1,20 @@
+# Normal response
+POST http://localhost:3001/api/users HTTP/1.1
+Content-Type: application/json
+
+{
+	"username": "Yibi",
+	"name": "Silvia Isabella",
+  "password": "1234"
+}
+
+###
+
+# Error response
+POST http://localhost:3001/api/users HTTP/1.1
+Content-Type: application/json
+
+{
+	"username": "O'm",
+	"name": "She now",
+}
