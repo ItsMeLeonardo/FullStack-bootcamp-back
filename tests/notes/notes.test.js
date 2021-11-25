@@ -35,7 +35,7 @@ describe('POST method', () => {
     const newNote = {
       content: 'Test new note :D',
       important: false,
-      user: '619ed3fb66d61bb541baa701',
+      user: '619fd2a7c11458512b3e8c59',
     }
 
     await api
@@ -56,26 +56,30 @@ describe('POST method', () => {
       important: false,
     }
 
-    await api
+    const response = await api
       .post('/api/notes')
       .send(newNote)
       .expect(400)
       .expect('Content-Type', /application\/json/)
 
-    const { response } = await getAllNotes()
-    expect(response.body).toHaveLength(initialNotes.length)
+    expect(response.body.error).toContain('content missing')
+
+    const { response: notes } = await getAllNotes()
+    expect(notes.body).toHaveLength(initialNotes.length)
   })
 
-  test('ADD note with small content', async () => {
+  test('ADD note with invalid user', async () => {
     const newNote = {
-      content: '',
+      content: '123456',
     }
 
-    await api
+    const responseError = await api
       .post('/api/notes')
       .send(newNote)
       .expect(400)
       .expect('Content-Type', /application\/json/)
+
+    expect(responseError.body.error).toContain('UserId is invalid')
 
     const { response } = await getAllNotes()
     expect(response.body).toHaveLength(initialNotes.length)
