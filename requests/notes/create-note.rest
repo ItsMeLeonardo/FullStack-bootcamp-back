@@ -1,7 +1,7 @@
 # Normal response
 POST http://localhost:3001/api/notes HTTP/1.1
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWZlMTA0MmYwYjkyM2I1MTg2OTQxYSIsInVzZXJuYW1lIjoiWWliaSIsImlhdCI6MTYzNzg4MDkwNn0.F9Gayg60tKGdpbAGLJ6nA9IpZTH1i38QUjf3xi0jHmQ
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWZlMTA0MmYwYjkyM2I1MTg2OTQxYSIsInVzZXJuYW1lIjoiWWliaSIsImlhdCI6MTYzNzg4MTMxM30.1y6FKCRWtkRYvfJ-yzTxiXeqY34AvL-d9-_VP3EuOBg 
 
 {
 	"content": "Refactor the extra JWT",

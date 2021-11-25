@@ -23,7 +23,7 @@ notesRouter.get('/:id', (request, response, next) => {
     .catch((error) => next(error))
 })
 
-notesRouter.delete('/:id', (request, response, next) => {
+notesRouter.delete('/:id', userExtractor, (request, response, next) => {
   const { id } = request.params
   Note.findByIdAndRemove(id)
     .then(() => {
@@ -32,15 +32,7 @@ notesRouter.delete('/:id', (request, response, next) => {
     .catch((error) => next(error))
 })
 
-const getTokenFrom = (request) => {
-  const authorization = request.get('authorization')
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    return authorization.substring(7)
-  }
-  return null
-}
-
-notesRouter.post('/', async (request, response, next) => {
+notesRouter.post('/', userExtractor, async (request, response, next) => {
   const { content, important = false } = request.body
 
   if (!content) {
@@ -50,20 +42,7 @@ notesRouter.post('/', async (request, response, next) => {
     return
   }
 
-  const token = getTokenFrom(request)
-
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-
-  if (!token || !decodedToken.id) {
-    response
-      .status(400)
-      .json({
-        error: 'token missing or invalid',
-      })
-      .end()
-    return
-  }
-  const { id: userId } = decodedToken
+  const { userId } = request
 
   const user = await User.findById(userId)
 
@@ -85,7 +64,7 @@ notesRouter.post('/', async (request, response, next) => {
   }
 })
 
-notesRouter.put('/:id', (request, response, next) => {
+notesRouter.put('/:id', userExtractor, (request, response, next) => {
   const { id } = request.params
   const note = request.body
   if (!note?.content) {

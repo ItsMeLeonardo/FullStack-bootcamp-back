@@ -1,7 +1,8 @@
-PUT http://localhost:3001/api/notes/619d3e7d4875760027285fdc HTTP/1.1
+PUT http://localhost:3001/api/notes/61a01668b4fb9c5077c3f5a8 HTTP/1.1
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWZlMTA0MmYwYjkyM2I1MTg2OTQxYSIsInVzZXJuYW1lIjoiWWliaSIsImlhdCI6MTYzNzg4MTMxM30.1y6FKCRWtkRYvfJ-yzTxiXeqY34AvL-d9-_VP3EuOBg
 
 {
-	"content": "I'm finally to remember how to uses MongoDB",
+	"content": "update the note N°5",
 	"important": false
 }
