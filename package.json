@@ -8,6 +8,7 @@
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "test-user": "cross-env NODE_ENV=test jest --verbose tests/users/user.test.js",
     "test-note": "cross-env NODE_ENV=test jest --verbose tests/notes/notes.test.js",
+    "test-login": "cross-env NODE_ENV=test jest --verbose tests/login/login.test.js",
     "test:watch": "npm run test -- --watch"
   },
   "keywords": [],
@@ -32,6 +33,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.13",
     "mongoose-unique-validator": "^3.0.0"
   },

@@ -1,11 +1,11 @@
 # Normal response
 POST http://localhost:3001/api/notes HTTP/1.1
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWZlMTA0MmYwYjkyM2I1MTg2OTQxYSIsInVzZXJuYW1lIjoiWWliaSIsImlhdCI6MTYzNzg4MDkwNn0.F9Gayg60tKGdpbAGLJ6nA9IpZTH1i38QUjf3xi0jHmQ
 
 {
-	"content": "I'm remembering how to uses MongoDB",
-	"important": true,
-	"user": "619fe1042f0b923b5186941a"
+	"content": "Refactor the extra JWT",
+	"important": false
 }
 
 ###

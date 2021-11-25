@@ -1,4 +1,3 @@
-const api = require('../generic-helper')
 const User = require('../../models/User')
 
 const getAllUsers = async () => {
@@ -7,4 +6,4 @@ const getAllUsers = async () => {
   return users
 }
 
-module.exports = { api, getAllUsers }
+module.exports = { getAllUsers }

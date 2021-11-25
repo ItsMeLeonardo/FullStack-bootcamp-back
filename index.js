@@ -11,13 +11,12 @@ const app = express()
 
 const cors = require('cors')
 
-const Note = require('./models/Note')
-
 const notFound = require('./middleware/notFound')
 const handleErrors = require('./middleware/handleErrors')
 
 const usersRouter = require('./controllers/users')
 const notesRouter = require('./controllers/notes')
+const loginRouter = require('./controllers/login')
 
 Sentry.init({
   dsn: 'https://331ddb4d624541159f301c5e2ead419b@o1076483.ingest.sentry.io/6078345',
@@ -50,6 +49,8 @@ app.get('/', (request, response) => {
 app.use('/api/notes', notesRouter)
 
 app.use('/api/users', usersRouter)
+
+app.use('/api/login', loginRouter)
 
 app.use(notFound)
 

@@ -1,5 +1,6 @@
-const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
 const notesRouter = require('express').Router()
+const userExtractor = require('../middleware/userExtractor')
 
 const Note = require('../models/Note')
 const User = require('../models/User')
@@ -31,30 +32,40 @@ notesRouter.delete('/:id', (request, response, next) => {
     .catch((error) => next(error))
 })
 
+const getTokenFrom = (request) => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.substring(7)
+  }
+  return null
+}
+
 notesRouter.post('/', async (request, response, next) => {
-  const { content, important = false, user: userId } = request.body
+  const { content, important = false } = request.body
 
   if (!content) {
+    response.status(400).json({
+      error: 'content missing',
+    })
+    return
+  }
+
+  const token = getTokenFrom(request)
+
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+
+  if (!token || !decodedToken.id) {
     response
       .status(400)
       .json({
-        error: 'content missing',
+        error: 'token missing or invalid',
       })
       .end()
     return
   }
+  const { id: userId } = decodedToken
 
   const user = await User.findById(userId)
-
-  if (!user) {
-    response
-      .status(400)
-      .json({
-        error: 'UserId is invalid',
-      })
-      .end()
-    return
-  }
 
   const newNote = new Note({
     content,

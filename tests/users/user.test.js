@@ -1,18 +1,26 @@
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 
+const api = require('../generic-helper')
 const User = require('../../models/User')
 const { server } = require('../../index')
-const { api, getAllUsers } = require('./helpers')
+const { getAllUsers } = require('./helpers')
 
-describe('creating a new user', () => {
+describe('POST /users', () => {
   beforeEach(async () => {
-    await User.deleteMany({})
+    // const existDefaultUser = await User.findOne({ username: 'root' })
 
+    // if (existDefaultUser) {
+    await User.deleteMany({})
     const passwordHash = await bcrypt.hash('secret', 10)
-    const user = new User({ username: 'root', name: 'Superuser', passwordHash })
+    const user = new User({
+      username: 'root',
+      name: 'Superuser',
+      passwordHash,
+    })
 
     await user.save()
+    // }
   })
 
   test('should create a new user ', async () => {

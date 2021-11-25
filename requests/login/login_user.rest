@@ -1,0 +1,19 @@
+# correct account
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+	"username": "Yibi",
+  "password": "1234"
+}
+
+###
+
+# correct account
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+	"username": "other user",
+  "password": "invalid uwu"
+}
