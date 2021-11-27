@@ -6,6 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test:start": "cross-env NODE_ENV=test node index.js",
     "test-user": "cross-env NODE_ENV=test jest --verbose tests/users/user.test.js",
     "test-note": "cross-env NODE_ENV=test jest --verbose tests/notes/notes.test.js",
     "test-login": "cross-env NODE_ENV=test jest --verbose tests/login/login.test.js",
